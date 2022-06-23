@@ -9,11 +9,23 @@ const port = process.env.port || 3000;
 
 app.use(express.json());
 
+//middleware use here
+// app.use((req, res, next) => {
+//   console.log('Hello, this middlewares');
+//   next();
+// });
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
+
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dummy-data/tours.json`).toString()
 );
 
 const getAllTours = (req, res) => {
+  console.log(req.requestTime);
   res.status(200).json({
     status: 'Success',
     requestAt: req.requestTime,
