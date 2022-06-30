@@ -7,18 +7,24 @@ const app = express();
 
 //middleware
 app.use(morgan('dev'));
+
 app.use(express.json());
+
+app.use((req, res, next) => {
+  console.log('talking from middleware');
+  next();
+});
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 
 //middleware use here
 // app.use((req, res, next) => {
 //   console.log('Hello, this middlewares');
 //   next();
 // });
-
-app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
-  next();
-});
 
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dummy-data/tours.json`).toString()
@@ -158,21 +164,17 @@ const deleteUser = (req, res) => {
 //==================OR=========================
 
 //routes
-app.route('/api/v1/tours').get(getAllTours).post(createTour);
+const tourRouter = express.Router();
+const userRouter = express.Router();
 
-app
-  .route('/api/v1/tours/:id')
-  .get(getTour)
-  .patch(updateTour)
-  .delete(deleteTour);
+tourRouter.route('/').get(getAllTours).post(createTour);
+tourRouter.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
 
-app.route('/api/v1/users').get(getAllUsers).post(createUser);
+userRouter.route('/').get(getAllUsers).post(createUser);
+userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
-app
-  .route('/api/v1/users/:id')
-  .get(getUser)
-  .patch(updateUser)
-  .delete(deleteUser);
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
 
 app.get('/', (req, res) => {
   //console.log('Hello, I am expressjs of nodejs');
