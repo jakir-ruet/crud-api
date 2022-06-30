@@ -4,7 +4,7 @@
   "description": "crud-api developed using nodejs, expressjs & mongodb.",
   "main": "src/app.js",
   "scripts": {
-    "start": "nodemon src/app.js",
+    "start": "nodemon src/server/index.js",
     "dev": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
