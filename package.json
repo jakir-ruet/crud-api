@@ -24,9 +24,9 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.0",
     "parcel-bundler": "^1.12.5",
-    "prettier": "^2.7.1"
+    "prettier": "2.7.1"
   }
 }
